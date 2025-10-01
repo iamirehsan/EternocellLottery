@@ -1,6 +1,7 @@
 ﻿using EternocellLottery.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EternocellLottery.Controllers
 {
@@ -18,7 +19,7 @@ namespace EternocellLottery.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
         {
-          
+
             var entity = new User(cmd.FirstName, cmd.LastName, cmd.PhoneNumber);
             await _context.Users.AddAsync(entity);
             await _context.SaveChangesAsync();
@@ -30,5 +31,12 @@ namespace EternocellLottery.Controllers
             var count = _context.Users.Count();
             return count;
         }
+        [HttpGet]
+        public async Task Delete()
+        {
+            _context.Users.ExecuteDelete();
+
+        }
+
     }
 }
