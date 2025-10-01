@@ -1,145 +1,31 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
-    <meta charset="UTF-8" />
-    <title>ثبت اطلاعات قرعه‌کشی</title>
-    <style>
-        body {
-            font-family: 'Tahoma', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom, #fdfdfd, #eaf6ff);
-            background-attachment: fixed;
-            color: #333;
-        }
-
-        header {
-            background: #add8e6;
-            padding: 20px;
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            color: #222;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            background: #fff0f5;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #444;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 6px;
-            background: #0078D7;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-            button:hover {
-                background: #005a9e;
-            }
-
-        .error {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .success {
-            color: green;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرعه‌کشی اترنوسل</title>
+    <link rel="stylesheet" href="./styles/fonts/IranYekan/IranYekan.css">
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
+
 <body>
     <header id="userCount">تعداد شرکت‌کنندگان: ...</header>
 
-    <div class="container">
-        <h2>ثبت اطلاعات قرعه‌کشی</h2>
-        <input type="text" id="firstName" placeholder="نام *" required />
-        <input type="text" id="lastName" placeholder="نام خانوادگی *" required />
-        <input type="text" id="phoneNumber" placeholder="شماره موبایل (اختیاری)" />
-        <button onclick="createUser()">ثبت</button>
-        <div id="msg"></div>
-    </div>
+    <main>
+        <div class="container">
+            <form id="lotteryForm" novalidate>
+                <h2>ثبت اطلاعات قرعه‌کشی</h2>
+                <input type="text" id="firstName" placeholder="نام *" required />
+                <input type="text" id="lastName" placeholder="نام خانوادگی *" required />
+                <input type="tel" id="phoneNumber" placeholder="شماره موبایل (اختیاری)" />
+                <button id="submitBtn" type="submit">ثبت</button>
+            </form>
+            <div id="msg"></div>
+        </div>
 
-    <script>
-        // Change if your API is on another host
-        const API_BASE = "";
-
-        async function createUser() {
-            const firstName = document.getElementById("firstName").value.trim();
-            const lastName = document.getElementById("lastName").value.trim();
-            const phoneNumber = document.getElementById("phoneNumber").value.trim();
-            const msg = document.getElementById("msg");
-
-            msg.innerText = "";
-            msg.className = "";
-
-            if (!firstName || !lastName) {
-                msg.innerText = "نام و نام خانوادگی الزامی است.";
-                msg.className = "error";
-                return;
-            }
-
-            const response = await fetch(`${API_BASE}/api/User/CreateUser`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ firstName, lastName, phoneNumber })
-            });
-
-            if (response.ok) {
-                msg.innerText = "اطلاعات شما با موفقیت ثبت شد 🎉";
-                msg.className = "success";
-                document.getElementById("firstName").value = "";
-                document.getElementById("lastName").value = "";
-                document.getElementById("phoneNumber").value = "";
-                await getUserCount();
-            } else {
-                msg.innerText = "در ثبت اطلاعات خطایی رخ داد.";
-                msg.className = "error";
-            }
-        }
-
-        async function getUserCount() {
-            const response = await fetch(`${API_BASE}/api/User/GetAllUserCount`);
-            if (response.ok) {
-                const count = await response.json();
-                document.getElementById("userCount").innerText = "تعداد شرکت‌کنندگان: " + count;
-            } else {
-                document.getElementById("userCount").innerText = "تعداد شرکت‌کنندگان: خطا";
-            }
-        }
-
-        // Load count at startup
-        getUserCount();
-    </script>
+    </main>
+    <script src="./index.js"></script>
 </body>
+
 </html>

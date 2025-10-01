@@ -1,4 +1,6 @@
-﻿using EternocellLottery.Entity;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
+using EternocellLottery.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +39,52 @@ namespace EternocellLottery.Controllers
             _context.Users.ExecuteDelete();
 
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> ExportUsersToExcel()
+        {
+            var users = await _context.Users
+                .OrderBy(u => u.CreatedAt)
+                .ToListAsync();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Users");
+
+                // Header row
+                worksheet.Cell(1, 1).Value = "ایدی";
+                worksheet.Cell(1, 2).Value = "نام";
+                worksheet.Cell(1, 3).Value = "نام خانوادگی";
+                worksheet.Cell(1, 4).Value = "شماره موبایل";
+                worksheet.Cell(1, 5).Value = "تاریخ شرکت";
+
+                // Data rows
+                for (int i = 0; i < users.Count; i++)
+                {
+                    var u = users[i];
+                    worksheet.Cell(i + 2, 1).Value = u.Id;
+                    worksheet.Cell(i + 2, 2).Value = u.FirstName;
+                    worksheet.Cell(i + 2, 3).Value = u.LastName;
+                    worksheet.Cell(i + 2, 4).Value = u.PhoneNumber ?? "";
+                    worksheet.Cell(i + 2, 5).Value = u.CreatedAt.ToString("yyyy-MM-dd HH:mm");
+                }
+
+                // Auto-size columns
+                worksheet.Columns().AdjustToContents();
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "Users.xlsx");
+                }
+            }
+        }
+
 
     }
 }
