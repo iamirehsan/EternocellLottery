@@ -1,10 +1,13 @@
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+html{
+  overflow: hidden  ;
+}
 body {
-  font-family: IRANYekan  ;
+  font-family: IRANYekan;
   margin: 0;
   padding: 0;
   background: linear-gradient(to bottom, #fdfdfd, #eaf6ff);
@@ -14,16 +17,38 @@ body {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
+  overflow: auto;
+  /* background: url("../IMG_2224.JPG") center center / contain no-repeat fixed; */
+
+  /* backdrop-filter: blur(1px); */
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: -1;
+  background-image: url("../IMG_2224.JPG");
+  background-position: center center;
+  /* background-repeat: no-repeat; */
+  background-size: auto 100%;
+  background-attachment: fixed;
+  /* opacity: 0.8; */
+  filter: blur(1.5px);
+  /* background-color: black; */
 }
 
 header {
-  background: #add8e6;
   padding: 20px;
   text-align: center;
   font-size: 22px;
   font-weight: bold;
-  color: #222;
-  border-bottom: 2px solid #ddd;
+  color: white;
+  position: fixed;
+  width: 100%;
 }
 
 main {
@@ -37,17 +62,16 @@ main {
 .container {
   max-width: 400px;
   margin: 50px auto;
-  background: #f9f8f8;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
   text-align: center;
+  background: rgb(255 255 255 / 40%);
+  /* backdrop-filter: blur(2px); */
+  color: white;
 }
 
-h2 {
-  margin-bottom: 20px;
-  color: #444;
-}
+
 
 input {
   width: 100%;
@@ -62,7 +86,7 @@ input:focus {
   outline: none;
 }
 
-input::placeholder{
+input::placeholder {
   text-align: right;
 }
 
@@ -72,12 +96,12 @@ button {
   margin-top: 20px;
   border: none;
   border-radius: 6px;
-  background: #0078d7;
+  background: #093559;
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 button:hover {
@@ -90,15 +114,21 @@ button:disabled {
 }
 
 .error {
-  color: red;
+  background: #cc0000;
   font-size: 14px;
-  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0 1rem;
+  border-radius: 0.25rem;
 }
 
 .success {
-  color: green;
+  color: #003d00;
   font-size: 2rem;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .hidden {

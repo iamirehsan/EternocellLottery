@@ -10,15 +10,19 @@
 </head>
 
 <body>
-    <header id="userCount">تعداد شرکت‌کنندگان: ...</header>
+    <!-- <header id="userCount">تعداد شرکت‌کنندگان: ...</header> -->
 
     <main>
         <div class="container">
             <form id="lotteryForm" novalidate>
-                <h2>ثبت اطلاعات قرعه‌کشی</h2>
-                <input type="text" id="firstName" placeholder="نام *" required />
-                <input type="text" id="lastName" placeholder="نام خانوادگی *" required />
-                <input type="tel" id="phoneNumber" placeholder="شماره موبایل (اختیاری)" />
+                <div>
+                    <h2>قرعه‌کشی همایش اصفهان</h2>
+                    <p id="userCount">تعداد شرکت‌کنندگان: ...</p>
+                </div>
+
+                <input type="text" id="fullName" name="fullName" placeholder="نام و نام خانوادگی *" required />
+                <input type="text" id="instagramId" name="instagramId" placeholder="نام کاربری اینستاگرام" />
+                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="شماره موبایل" />
                 <button id="submitBtn" type="submit">ثبت</button>
             </form>
             <div id="msg"></div>

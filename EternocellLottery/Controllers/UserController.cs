@@ -22,7 +22,7 @@ namespace EternocellLottery.Controllers
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
         {
 
-            var entity = new User(cmd.FirstName, cmd.LastName, cmd.PhoneNumber);
+            var entity = new User(cmd.FullName, cmd.InstagramId, cmd.PhoneNumber);
             await _context.Users.AddAsync(entity);
             await _context.SaveChangesAsync();
             return Ok("کاربر با موفقیت ثبت شد");
@@ -55,8 +55,8 @@ namespace EternocellLottery.Controllers
 
                 // Header row
                 worksheet.Cell(1, 1).Value = "ایدی";
-                worksheet.Cell(1, 2).Value = "نام";
-                worksheet.Cell(1, 3).Value = "نام خانوادگی";
+                worksheet.Cell(1, 2).Value = "نام و نام خانوادگی";
+                worksheet.Cell(1, 3).Value = "ایدی اینستاگرام";
                 worksheet.Cell(1, 4).Value = "شماره موبایل";
                 worksheet.Cell(1, 5).Value = "تاریخ شرکت";
 
@@ -65,8 +65,8 @@ namespace EternocellLottery.Controllers
                 {
                     var u = users[i];
                     worksheet.Cell(i + 2, 1).Value = u.Id;
-                    worksheet.Cell(i + 2, 2).Value = u.FirstName;
-                    worksheet.Cell(i + 2, 3).Value = u.LastName;
+                    worksheet.Cell(i + 2, 2).Value = u.FullName;
+                    worksheet.Cell(i + 2, 3).Value = u.InstagramId;
                     worksheet.Cell(i + 2, 4).Value = u.PhoneNumber ?? "";
                     worksheet.Cell(i + 2, 5).Value = u.CreatedAt.ToString("yyyy-MM-dd HH:mm");
                 }

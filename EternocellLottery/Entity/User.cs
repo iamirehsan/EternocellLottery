@@ -8,16 +8,15 @@ namespace EternocellLottery.Entity
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
+        public string FullName { get; set; }
+        public string? InstagramId { get; set; }
         public string? PhoneNumber { get; set; }
 
-        public User(string firstName, string lastName, string? phoneNumber)
+        public User(string fullName, string instagramId, string? phoneNumber)
         {
 
-            FirstName = firstName;
-            LastName = lastName;
+            FullName = fullName;
+            InstagramId = instagramId;
             PhoneNumber = phoneNumber;
         }
     }

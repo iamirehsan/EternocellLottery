@@ -9,8 +9,8 @@ form.addEventListener("submit", function (event) {
 
 
 async function createUser() {
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
+    const fullName = document.getElementById("fullName").value.trim();
+    const instagramId = document.getElementById("instagramId").value.trim();
     const phoneNumber = document.getElementById("phoneNumber").value.trim();
     const msg = document.getElementById("msg");
     const submitBtn = document.getElementById("submitBtn");
@@ -18,7 +18,7 @@ async function createUser() {
     msg.innerText = "";
     msg.className = "";
 
-    if (!firstName || !lastName) {
+    if (!fullName ) {
         msg.innerText = "نام و نام خانوادگی الزامی است.";
         msg.className = "error";
         return;
@@ -35,14 +35,14 @@ async function createUser() {
     const response = await fetch(`${API_BASE}/api/User/CreateUser`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, phoneNumber })
+        body: JSON.stringify({ fullName, instagramId, phoneNumber })
     });
 
     if (response.ok) {
         msg.innerText = "اطلاعات شما با موفقیت ثبت شد 🎉";
         msg.className = "success";
-        document.getElementById("firstName").value = "";
-        document.getElementById("lastName").value = "";
+        document.getElementById("fullName").value = "";
+        document.getElementById("instagramId").value = "";
         document.getElementById("phoneNumber").value = "";
         submitBtn.disabled = true;
         form.classList.add("hidden");
